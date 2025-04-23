@@ -3,3 +3,4 @@
 *.tfstate
 *.tfstate.backup
 envs/dev/dev-sa.json
+*.json

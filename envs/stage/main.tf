@@ -1,7 +1,7 @@
 provider "google" {
   project     = var.project_id
   region      = var.region
-  credentials = "dev-sa.json"
+  credentials = "stage-sa.json"
 }
 module "network" {
   source     = "../../modules/network"
@@ -33,30 +33,18 @@ module "subnets" {
     }
   ]
 }
+
 module "gke" {
   source       = "../../modules/gke"
   project_id   = var.project_id
   region       = var.region
-  zone = var.zone
   cluster_name = "gke-${var.environment}"
   network      = module.network.vpc_self_link
   subnetwork   = module.network.subnet_names[0]  # Use first subnet
 
-  node_count   = 1
+  node_count   = 2
   machine_type = "e2-standard-2"
   node_labels  = {
     environment = var.environment
   }
-}
-
-module "gke_service_account" {
-  source              = "../../modules/iam"
-  project_id          = var.project_id
-  service_account_id  = "gke-node-sa"
-  display_name        = "GKE Node Service Account"
-  roles               = [
-    "roles/logging.logWriter",
-    "roles/monitoring.metricWriter",
-    "roles/container.nodeServiceAccount",
-  ]
 }

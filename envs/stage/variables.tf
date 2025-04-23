@@ -1,9 +1,6 @@
 variable "project_id" {}
 variable "region" {}
 variable "vpc_name" {}
-variable "zone" {
-  
-}
 
 variable "subnets" {
   type = list(object({
