@@ -1,36 +1,8 @@
-name: Terraform Pipeline
-
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-
+on: [push]
+ 
 jobs:
-  terraform:
-    name: Terraform
-    runs-on: ubuntu-latest
-
-    defaults:
-      run:
-        working-directory: ./envs/dev
-
+  say-hello:
+    runs-on: slot.a
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v3
-
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v3
-
-    - name: Init
-      run: terraform init -backend-config="../../backend/backend.tf"
-
-    - name: Validate
-      run: terraform validate
-
-    - name: Plan
-      run: terraform plan -var-file="terraform.tfvars"
-
-    - name: Apply
-      if: github.ref == 'refs/heads/main'
-      run: terraform apply -auto-approve -var-file="terraform.tfvars"
+      - name: Print Hello World
+        run: echo "Hello, World!"
