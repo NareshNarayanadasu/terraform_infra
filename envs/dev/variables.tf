@@ -13,3 +13,8 @@ variable "subnets" {
   }))
 }
 variable "environment" {}
+
+variable "db_password" {
+  type      = string
+  sensitive = true
+}

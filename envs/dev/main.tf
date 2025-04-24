@@ -60,3 +60,12 @@ module "gke_service_account" {
     "roles/container.nodeServiceAccount",
   ]
 }
+module "cloudsql" {
+  source            = "../../modules/cloudsql"
+  project_id        = var.project_id
+  region            = var.region
+  instance_name     = "dev-db"
+  network           = module.network.vpc_self_link
+  db_user           = "postgres"
+  db_password       = var.db_password
+}

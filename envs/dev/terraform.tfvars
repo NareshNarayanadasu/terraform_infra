@@ -16,3 +16,4 @@ subnets = [
   }
 ]
 environment = "dev"
+db_password = "Naresh123"
