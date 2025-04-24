@@ -5,12 +5,10 @@ resource "google_sql_database_instance" "db_instance" {
   project          = var.project_id
 
   settings {
-    tier              = var.tier
-    availability_type = "ZONAL"
+    tier = var.tier
 
     ip_configuration {
-      ipv4_enabled    = false
-      private_network = var.network
+      ipv4_enabled    = true          # <-- Enable public IP
     }
 
     backup_configuration {
@@ -24,5 +22,5 @@ resource "google_sql_database_instance" "db_instance" {
 resource "google_sql_user" "default" {
   name     = var.db_user
   instance = google_sql_database_instance.db_instance.name
-  password = var.db_password
+  password_wo = var.db_password
 }

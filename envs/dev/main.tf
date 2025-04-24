@@ -67,5 +67,5 @@ module "cloudsql" {
   instance_name     = "dev-db"
   network           = module.network.vpc_self_link
   db_user           = "postgres"
-  db_password       = var.db_password
+  db_password      = var.db_password
 }
