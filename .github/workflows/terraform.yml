@@ -4,7 +4,7 @@ on: [push]
  
 jobs:
   say-hello:
-    runs-on: [self-hosted, terraform]
+    runs-on: self-hosted
     steps:
       - name: Print Hello World
         run: echo "Hello, World!"
