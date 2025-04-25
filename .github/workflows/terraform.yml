@@ -4,7 +4,7 @@ on: [push]
  
 jobs:
   say-hello:
-    runs-on: [self-hosted, practice-instance]
+    runs-on: [self-hosted, practice-instance, terraform]
     steps:
       - name: Print Hello World
         run: echo "Hello, World!"
