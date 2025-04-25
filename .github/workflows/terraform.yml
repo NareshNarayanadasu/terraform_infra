@@ -16,14 +16,14 @@ jobs:
         working-directory: ./envs/dev
 
     steps:
-    # - name: Checkout repo
-    #   uses: actions/checkout@v3
+    - name: Checkout repo
+      uses: actions/checkout@v3
 
-    # - name: Setup Terraform
-    #   uses: hashicorp/setup-terraform@v3
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
 
     - name: Init
-      run: terraform init             # -backend-config="../../backend/backend.tf"
+      run: terraform init 
 
     - name: Validate
       run: terraform validate
