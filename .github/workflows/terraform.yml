@@ -9,7 +9,7 @@ on:
 jobs:
   terraform:
     name: Terraform
-    runs-on: ubuntu-latest
+    runs-on: practice-instance
 
     defaults:
       run:
