@@ -15,13 +15,14 @@ jobs:
     - name: Checkout repo
       uses: actions/checkout@v3
 
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+
+    # Define the environment variables for GitHub secrets (automatically handled by GitHub Actions)
     - name: Set up environment variables for secrets
       run: |
         echo "BUCKET_SA=${{ secrets.BUCKET_SA }}" >> $GITHUB_ENV
         echo "DEV_SA=${{ secrets.DEV_SA }}" >> $GITHUB_ENV
-
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v3
 
     - name: Init
       run: terraform init -backend-config="credentials=${{ secrets.BUCKET_SA }}"
