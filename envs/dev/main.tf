@@ -1,7 +1,7 @@
 provider "google" {
   project     = var.project_id
   region      = var.region
-  credentials = "${env.DEV_SA}"
+  credentials = "dev_proj.json"
 }
 module "network" {
   source     = "../../modules/network"
