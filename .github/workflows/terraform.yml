@@ -9,7 +9,11 @@ on:
 jobs:
   terraform:
     name: Terraform
-    runs-on: self-hosted
+    runs-on: [self-hosted, practice-instance]
+
+    defaults:
+      run:
+        working-directory: ./envs/dev
 
     steps:
     - name: Checkout repo
@@ -17,15 +21,16 @@ jobs:
 
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
+    - name: Configure Google Cloud Credentials (Service Account 1)
+      run: echo "${{ secrets.BUCKET_SA }}" > bucket_sa.json
+      shell: bash
 
-    # Define the environment variables for GitHub secrets (automatically handled by GitHub Actions)
-    - name: Set up environment variables for secrets
-      run: |
-        echo "BUCKET_SA=${{ secrets.BUCKET_SA }}" >> $GITHUB_ENV
-        echo "DEV_SA=${{ secrets.DEV_SA }}" >> $GITHUB_ENV
+    - name: Configure Google Cloud Credentials (Service Account 2)
+      run: echo "${{ secrets.DEV_SA }}" > dev_proj.json
+      shell: bash
 
     - name: Init
-      run: terraform init -backend-config="credentials=${{ secrets.BUCKET_SA }}"
+      run: terraform init # -backend-config="../../backend/backend.tf"
 
     - name: Validate
       run: terraform validate
