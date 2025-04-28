@@ -26,18 +26,18 @@ jobs:
 
     - name: Configure Google Cloud Credentials (Service Account 2)
       run: |
-        echo '${{ secrets.DEV_SA }}' > ../../envs/dev/dev_proj.json
+        echo '${{ secrets.DEV_SA }}' > dev_proj.json
       shell: bash
 
     - name: Configure Google Cloud Credentials (Service Account 1)
       run: |
-        echo '${{ secrets.BUCKET_SA }}' > ../../envs/dev/bucket_sa.json
+        echo '${{ secrets.BUCKET_SA }}' > bucket_sa.json
       shell: bash
 
     - name: Terraform Init
       run: terraform init # -backend-config="../../backend/backend.tf"
       env:
-        GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/envs/dev/bucket_sa.json
+        GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/bucket_sa.json
 
     - name: Terraform Validate
       run: terraform validate
