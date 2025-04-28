@@ -16,28 +16,33 @@ jobs:
         working-directory: ./envs/dev
 
     steps:
-    - name: Checkout repo
+    - name: Checkout repository
       uses: actions/checkout@v3
 
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
-    - name: Configure Google Cloud Credentials (Service Account 1)
-      run: echo "${{ secrets.BUCKET_SA }}" | base64 --decode > ../../envs/dev/bucket_sa.json
+
+    - name: Configure Google Cloud Credentials (Service Account 1 - Bucket SA)
+      run: |
+        echo "${{ secrets.BUCKET_SA }}" | base64 --decode > ../../envs/dev/bucket_sa.json
       shell: bash
 
-    - name: Configure Google Cloud Credentials (Service Account 2)
-      run: echo "${{ secrets.DEV_SA }}" | base64 --decode > ../../envs/dev/dev_proj.json
+    - name: Configure Google Cloud Credentials (Service Account 2 - Dev Project SA)
+      run: |
+        echo "${{ secrets.DEV_SA }}" | base64 --decode > ../../envs/dev/dev_proj.json
       shell: bash
 
-    - name: Init
-      run: terraform init # -backend-config="../../backend/backend.tf"
+    - name: Terraform Init
+      run: terraform init -backend-config="../../backend/backend.tf"
+      env:
+        GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/envs/dev/dev_proj.json
 
-    - name: Validate
+    - name: Terraform Validate
       run: terraform validate
 
-    - name: Plan
+    - name: Terraform Plan
       run: terraform plan -var-file="terraform.tfvars"
 
-    - name: Apply
+    - name: Terraform Apply
       if: github.ref == 'refs/heads/main'
       run: terraform apply -auto-approve -var-file="terraform.tfvars"
