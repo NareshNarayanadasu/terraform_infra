@@ -22,11 +22,11 @@ jobs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
     - name: Configure Google Cloud Credentials (Service Account 1)
-      run: echo "${{ secrets.BUCKET_SA }}" > ../../envs/dev/bucket_sa.json
+      run: echo "${{ secrets.BUCKET_SA }}" | base64 --decode > ../../envs/dev/bucket_sa.json
       shell: bash
 
     - name: Configure Google Cloud Credentials (Service Account 2)
-      run: echo "${{ secrets.DEV_SA }}" > ../../envs/dev/dev_proj.json
+      run: echo "${{ secrets.DEV_SA }}" | base64 --decode > ../../envs/dev/dev_proj.json
       shell: bash
 
     - name: Init
